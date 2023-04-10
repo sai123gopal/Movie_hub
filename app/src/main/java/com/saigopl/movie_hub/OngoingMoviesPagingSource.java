@@ -3,7 +3,8 @@ package com.saigopl.movie_hub;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.paging.PagingState;
-import androidx.paging.rxjava2.RxPagingSource;
+import androidx.paging.rxjava3.RxPagingSource;
+
 
 import com.saigopl.movie_hub.models.OngoingMovieDetails;
 import com.saigopl.movie_hub.models.OngoingMovieResults;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
@@ -23,8 +24,8 @@ public class OngoingMoviesPagingSource extends RxPagingSource<Integer, OngoingMo
     private boolean isListEnded = false;
     private int page =1;
 
-    public OngoingMoviesPagingSource() {
-        this.apiInterface = RetrofitClint.getRetrofit().create(APIInterface.class);
+    public OngoingMoviesPagingSource(APIInterface apiInterface) {
+        this.apiInterface = apiInterface;
     }
 
     @Nullable
@@ -62,17 +63,18 @@ public class OngoingMoviesPagingSource extends RxPagingSource<Integer, OngoingMo
 
         return  apiInterface.getOnGoingMovieResults(Utils.apiKey,Utils.language,page)
                 .subscribeOn(Schedulers.io())
-                .map(responcse -> toLoadResults(responcse.body().getDetails(),page))
+                .map(responcse -> toLoadResults(responcse.getDetails(),page))
                 .onErrorReturn(LoadResult.Error::new);
     }
 
-    public LoadResult<Integer,OngoingMovieDetails> toLoadResults(List<OngoingMovieDetails> movieResults, Integer pageNo){
+   public LoadResult<Integer,OngoingMovieDetails> toLoadResults(List<OngoingMovieDetails> movieDetails,Integer pageNo){
+
         if(isListEnded){
             pageNo = null;
         }else {
-            pageNo = page;
+            pageNo = page+1;
         }
-        return new LoadResult.Page<Integer, OngoingMovieDetails>(movieResults,pageNo);
-    }
+        return new LoadResult.Page<Integer,OngoingMovieDetails>(movieDetails,null,pageNo);
+   }
 
 }

@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 public interface APIInterface {
 
     @GET("now_playing")
-    Single<Response<OngoingMovieResults>> getOnGoingMovieResults(@Query("api_key") String apiKey,
+    Single<OngoingMovieResults> getOnGoingMovieResults(@Query("api_key") String apiKey,
                                                                 @Query("language") String language,
                                                                 @Query("page") int page);
 

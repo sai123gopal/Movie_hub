@@ -2,12 +2,17 @@ package com.saigopl.movie_hub;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagingData;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.saigopl.movie_hub.databinding.ActivityMainBinding;
+import com.saigopl.movie_hub.models.OngoingMovieDetails;
 import com.saigopl.movie_hub.models.OngoingMovieResults;
 
 import retrofit2.Call;
@@ -18,7 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
-    private  APIInterface apiInterface ;
+    OnGoingMoviesViewModel moviesViewModel;
+
+    OnGoingMoviesRecyclerAdapter adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +36,18 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setLifecycleOwner(this);
 
+        moviesViewModel = new ViewModelProvider(this).get(OnGoingMoviesViewModel.class);
+
+        binding.recycler.setLayoutManager(new LinearLayoutManager(this));
+        moviesViewModel.getOnGoingMovieDetailsList();
+
+        adapter = new OnGoingMoviesRecyclerAdapter(new OnGoingMoviesDiffUtils(),this);
+
+        binding.recycler.setAdapter(adapter);
 
 
-       apiInterface = RetrofitClint.getRetrofit().create(APIInterface.class);
+        moviesViewModel.movieDetailsList.observe(this, ongoingMovieDetailsPagingData ->
+                adapter.submitData(getLifecycle(),ongoingMovieDetailsPagingData));
 
 
 
