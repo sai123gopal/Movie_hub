@@ -1,4 +1,4 @@
-package com.saigopl.movie_hub;
+package com.saigopl.movie_hub.helpUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;

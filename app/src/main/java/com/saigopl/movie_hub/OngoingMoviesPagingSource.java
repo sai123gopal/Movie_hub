@@ -6,12 +6,11 @@ import androidx.paging.PagingState;
 import androidx.paging.rxjava3.RxPagingSource;
 
 
+import com.saigopl.movie_hub.helpUtils.Utils;
 import com.saigopl.movie_hub.models.OngoingMovieDetails;
-import com.saigopl.movie_hub.models.OngoingMovieResults;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
@@ -20,9 +19,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class OngoingMoviesPagingSource extends RxPagingSource<Integer, OngoingMovieDetails> {
 
-    private APIInterface apiInterface;
+    private final APIInterface apiInterface;
     private boolean isListEnded = false;
-    private int page =1;
+    private int page = 1;
 
     public OngoingMoviesPagingSource(APIInterface apiInterface) {
         this.apiInterface = apiInterface;
@@ -63,18 +62,23 @@ public class OngoingMoviesPagingSource extends RxPagingSource<Integer, OngoingMo
 
         return  apiInterface.getOnGoingMovieResults(Utils.apiKey,Utils.language,page)
                 .subscribeOn(Schedulers.io())
-                .map(responcse -> toLoadResults(responcse.getDetails(),page))
+                .map(responcse -> {
+                    if(responcse == null || responcse.getDetails().size()==0){
+                        isListEnded = true;
+                    }
+                    return toLoadResults(responcse.getDetails());
+                })
                 .onErrorReturn(LoadResult.Error::new);
     }
 
-   public LoadResult<Integer,OngoingMovieDetails> toLoadResults(List<OngoingMovieDetails> movieDetails,Integer pageNo){
+   public LoadResult<Integer,OngoingMovieDetails> toLoadResults(List<OngoingMovieDetails> movieDetails){
 
         if(isListEnded){
-            pageNo = null;
+            page = Integer.parseInt(null);
         }else {
-            pageNo = page+1;
+            page = page+1;
         }
-        return new LoadResult.Page<Integer,OngoingMovieDetails>(movieDetails,null,pageNo);
+        return new LoadResult.Page<>(movieDetails, null, page);
    }
 
 }

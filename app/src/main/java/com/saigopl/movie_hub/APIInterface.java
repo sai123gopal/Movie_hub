@@ -1,5 +1,6 @@
 package com.saigopl.movie_hub;
 
+import com.saigopl.movie_hub.models.MovieDetails;
 import com.saigopl.movie_hub.models.OngoingMovieResults;
 
 import io.reactivex.rxjava3.core.Single;
@@ -12,10 +13,14 @@ public interface APIInterface {
 
     @GET("now_playing")
     Single<OngoingMovieResults> getOnGoingMovieResults(@Query("api_key") String apiKey,
-                                                                @Query("language") String language,
-                                                                @Query("page") int page);
+                                                                 @Query("language") String language,
+                                                                 @Query("page") int page);
 
 
+    @GET()
+    Call<MovieDetails> getMovieDetails(@Query("api_key") String apiKey,
+                                       @Query("language") String language,
+                                       @Query("movie_id") int movieId);
 
 
 

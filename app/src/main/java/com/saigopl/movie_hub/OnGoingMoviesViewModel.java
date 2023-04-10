@@ -30,7 +30,7 @@ public class OnGoingMoviesViewModel extends AndroidViewModel {
 
     public void getOnGoingMovieDetailsList(){
         Pager<Integer,OngoingMovieDetails> pager = new Pager<>(
-                new PagingConfig(20,5,false,20),
+                new PagingConfig(20,1,false,20),
                 ()-> new OngoingMoviesPagingSource(apiInterface)
         );
 

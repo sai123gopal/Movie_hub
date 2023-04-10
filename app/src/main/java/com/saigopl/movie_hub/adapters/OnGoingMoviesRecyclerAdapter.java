@@ -1,6 +1,7 @@
-package com.saigopl.movie_hub;
+package com.saigopl.movie_hub.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,11 @@ import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.saigopl.movie_hub.MainActivity;
+import com.saigopl.movie_hub.MovieDetailsActivity;
+import com.saigopl.movie_hub.R;
 import com.saigopl.movie_hub.databinding.OngoingMovieItemBinding;
 import com.saigopl.movie_hub.models.OngoingMovieDetails;
-
-import kotlinx.coroutines.CoroutineDispatcher;
 
 public class OnGoingMoviesRecyclerAdapter extends PagingDataAdapter<OngoingMovieDetails, OnGoingMoviesRecyclerAdapter.ViewModel> {
 
@@ -28,7 +30,7 @@ public class OnGoingMoviesRecyclerAdapter extends PagingDataAdapter<OngoingMovie
     @NonNull
     @Override
     public ViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        OngoingMovieItemBinding movieItemBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.ongoing_movie_item,parent,false);
+        OngoingMovieItemBinding movieItemBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.ongoing_movie_item,parent,false);
         return new ViewModel(movieItemBinding);
     }
 
@@ -45,4 +47,14 @@ public class OnGoingMoviesRecyclerAdapter extends PagingDataAdapter<OngoingMovie
             movieItemBinding = itemView;
         }
     }
+
+    public class Click{
+        public void openMovieDetails(View view,float id){
+            Intent intent = new Intent(context, MovieDetailsActivity.class);
+            intent.putExtra("id",id);
+            context.startActivity(intent);
+        }
+    }
+
+
 }

@@ -10,9 +10,28 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="Latest movies"
+                android:textColor="@color/blue"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
+            tools:itemCount="3"
+            tools:listitem="@layout/ongoing_movie_item"
             android:layout_height="match_parent">
         </androidx.recyclerview.widget.RecyclerView>
 
