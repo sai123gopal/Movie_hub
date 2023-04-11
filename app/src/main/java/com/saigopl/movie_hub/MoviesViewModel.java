@@ -37,6 +37,7 @@ public class MoviesViewModel extends AndroidViewModel {
     MutableLiveData<Credits> movieCredits;
     MutableLiveData<SimilarMovies> similarMoviesMutableLiveData;
     MutableLiveData<Reviews> reviewsMutableLiveData;
+    public MutableLiveData<Boolean> noReviews;
 
 
 
@@ -49,6 +50,7 @@ public class MoviesViewModel extends AndroidViewModel {
         movieCredits = new MutableLiveData<>();
         similarMoviesMutableLiveData = new MutableLiveData<>();
         reviewsMutableLiveData = new MutableLiveData<>();
+        noReviews = new MutableLiveData<>(false);
 
     }
 
@@ -78,6 +80,9 @@ public class MoviesViewModel extends AndroidViewModel {
                     public void onResponse(Call<Reviews> call, Response<Reviews> response) {
                         if(response.isSuccessful()){
                             if (response.body() != null){
+                                if(response.body().getMoviesReviews().size()==0 || response.body().getMoviesReviews() == null){
+                                    noReviews.setValue(true);
+                                }
                                 reviewsMutableLiveData.setValue(response.body());
                             }
                         }

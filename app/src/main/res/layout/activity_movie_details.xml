@@ -18,6 +18,9 @@
         <variable
             name="runtime"
             type="String" />
+        <variable
+            name="viewModel"
+            type="com.saigopl.movie_hub.MoviesViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -49,6 +52,7 @@
 
                     <ImageButton
                         android:layout_width="50dp"
+                        android:id="@+id/back"
                         android:background="#00000000"
                         android:src="@drawable/baseline_arrow_back_24"
                         android:layout_height="50dp"
@@ -205,6 +209,18 @@
                     android:text="Reviews"
                     android:textColor="@color/orange"
                     tools:text="Reviews"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    android:textSize="18sp"
+                    android:text="No reviews"
+                    tools:text="Movie name"
+                    android:visibility="@{viewModel.noReviews ? View.VISIBLE:View.GONE,default=gone}"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/blue"
                     android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

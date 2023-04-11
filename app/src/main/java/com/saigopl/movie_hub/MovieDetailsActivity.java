@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
+
 import com.saigopl.movie_hub.adapters.CastRecyclerAdapter;
 import com.saigopl.movie_hub.adapters.MovieReviewsRecyclerAdapter;
 import com.saigopl.movie_hub.adapters.SimilarMoviesRecyclerAdapter;
 import com.saigopl.movie_hub.databinding.ActivityMovieDetailsBinding;
+import com.saigopl.movie_hub.generated.callback.OnClickListener;
 import com.saigopl.movie_hub.models.Cast;
 import com.saigopl.movie_hub.models.MovieDetails;
 import com.saigopl.movie_hub.models.MoviesReviews;
@@ -47,6 +50,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         castArrayList= new ArrayList<>();
         similarMovieDetailsArrayList = new ArrayList<>();
         moviesReviewsArrayList = new ArrayList<>();
+
+        binding.setViewModel(moviesViewModel);
 
         if(movieId != 0F){
             moviesViewModel.movieId.setValue((int) movieId);
@@ -96,7 +101,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
             movieReviewsRecyclerAdapter.notifyDataSetChanged();
         });
 
-        binding.setClick(new Click());
+        binding.back.setOnClickListener(view -> {
+            finish();
+            MovieDetailsActivity.super.onBackPressed();
+        });
 
 
     }
