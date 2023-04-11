@@ -5,17 +5,125 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.saigopl.movie_hub.models.MovieDetails" />
+        <variable
+            name="genresString"
+            type="String" />
+        <variable
+            name="runtime"
+            type="String" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+                <ImageView
+                    app:loadPosterImage="@{model.poster_path}"
+                    android:src="@color/orange"
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ImageView>
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:background="#00000000"
+                        android:src="@drawable/baseline_arrow_back_24"
+                        android:layout_height="50dp"
+                        app:tint="@color/white">
+                    </ImageButton>
+
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        tools:text="9.0(39)"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/white"
+                        android:text="@{String.valueOf(model.vote_average)+`(`+String.valueOf(model.vote_count)+`)`}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:background="@drawable/curve_background"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="20dp"
+                android:orientation="vertical"
+                android:layout_marginTop="-30dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:text="@{model.title}"
+                    android:textColor="@color/orange"
+                    tools:text="Movie name"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+                <TextView
+                    android:textSize="18sp"
+                    android:text="@{genresString}"
+                    tools:text="Movie name"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    android:textSize="18sp"
+                    android:text="@{runtime}"
+                    tools:text="Movie name"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="@{model.overview}"
+                    tools:text="Movie name"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
 
 
 
+            </LinearLayout>
 
-    </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </layout>

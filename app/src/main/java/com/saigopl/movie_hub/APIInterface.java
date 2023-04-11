@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APIInterface {
@@ -17,10 +18,11 @@ public interface APIInterface {
                                                                  @Query("page") int page);
 
 
-    @GET()
-    Call<MovieDetails> getMovieDetails(@Query("api_key") String apiKey,
-                                       @Query("language") String language,
-                                       @Query("movie_id") int movieId);
+    @GET("{movie_id}")
+    Call<MovieDetails> getMovieDetails(@Path("movie_id") int movieId,
+                                       @Query("api_key") String apiKey,
+                                       @Query("language") String language);
+
 
 
 

@@ -89,7 +89,7 @@
             </TextView>
 
             <Button
-                android:onClick="@{view->click.openMovieDetails(view,model.id)}"
+                android:onClick="@{view->click.openMovieDetails(model.id)}"
                 android:text="Book"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"

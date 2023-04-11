@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 
+import com.saigopl.movie_hub.adapters.LoadingStateAdapter;
 import com.saigopl.movie_hub.adapters.OnGoingMoviesRecyclerAdapter;
 import com.saigopl.movie_hub.databinding.ActivityMainBinding;
 import com.saigopl.movie_hub.helpUtils.OnGoingMoviesDiffUtils;
@@ -15,11 +16,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
-    OnGoingMoviesViewModel moviesViewModel;
+    MoviesViewModel moviesViewModel;
 
     OnGoingMoviesRecyclerAdapter adapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +27,18 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setLifecycleOwner(this);
 
-        moviesViewModel = new ViewModelProvider(this).get(OnGoingMoviesViewModel.class);
+        moviesViewModel = new ViewModelProvider(this).get(MoviesViewModel.class);
 
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
         moviesViewModel.getOnGoingMovieDetailsList();
 
         adapter = new OnGoingMoviesRecyclerAdapter(new OnGoingMoviesDiffUtils(),this);
 
-        binding.recycler.setAdapter(adapter);
+        binding.recycler.setAdapter(adapter.withLoadStateFooter(new LoadingStateAdapter(this)));
 
-
-        moviesViewModel.movieDetailsList.observe(this, ongoingMovieDetailsPagingData ->
-                adapter.submitData(getLifecycle(),ongoingMovieDetailsPagingData));
+        moviesViewModel.movieDetailsList.observe(this, ongoingMovieDetailsPagingData -> {
+            adapter.submitData(getLifecycle(),ongoingMovieDetailsPagingData);
+        });
 
 
 

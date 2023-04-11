@@ -15,12 +15,14 @@ import com.saigopl.movie_hub.models.OngoingMovieDetails;
 
 import kotlinx.coroutines.CoroutineScope;
 
-public class OnGoingMoviesViewModel extends AndroidViewModel {
+public class MoviesViewModel extends AndroidViewModel {
 
     LiveData<PagingData<OngoingMovieDetails>> movieDetailsList ;
     APIInterface apiInterface ;
 
-    public OnGoingMoviesViewModel(@NonNull Application application) {
+
+
+    public MoviesViewModel(@NonNull Application application) {
         super(application);
 
         apiInterface = RetrofitClint.getRetrofit().create(APIInterface.class);
