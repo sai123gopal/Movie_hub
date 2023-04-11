@@ -1,5 +1,10 @@
 package com.saigopl.movie_hub.models;
 
+import android.icu.text.DecimalFormat;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,9 +19,9 @@ public class MovieDetails {
     @Expose
     private String backdrop_path;
 
-    @SerializedName("belongs_to_collection")
-    @Expose
-    private String belongs_to_collection = null;
+//    @SerializedName("belongs_to_collection")
+//    @Expose
+//    private String belongs_to_collection = null;
 
     @SerializedName("budget")
     @Expose
@@ -125,9 +130,9 @@ public class MovieDetails {
         return backdrop_path;
     }
 
-    public String getBelongs_to_collection() {
-        return belongs_to_collection;
-    }
+//    public String getBelongs_to_collection() {
+//        return belongs_to_collection;
+//    }
 
     public float getBudget() {
         return budget;
@@ -193,8 +198,10 @@ public class MovieDetails {
         return video;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public float getVote_average() {
-        return vote_average;
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        return Float.parseFloat(decimalFormat.format(vote_average));
     }
 
     public float getVote_count() {
@@ -211,9 +218,9 @@ public class MovieDetails {
         this.backdrop_path = backdrop_path;
     }
 
-    public void setBelongs_to_collection( String belongs_to_collection ) {
-        this.belongs_to_collection = belongs_to_collection;
-    }
+//    public void setBelongs_to_collection( String belongs_to_collection ) {
+//        this.belongs_to_collection = belongs_to_collection;
+//    }
 
     public void setBudget( float budget ) {
         this.budget = budget;

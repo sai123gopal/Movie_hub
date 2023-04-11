@@ -2,8 +2,11 @@ package com.saigopl.movie_hub;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.saigopl.movie_hub.databinding.ActivityMovieDetailsBinding;
 import com.saigopl.movie_hub.helpUtils.Utils;
@@ -20,6 +23,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     ActivityMovieDetailsBinding binding;
     APIInterface apiInterface;
     float movieId ;
+    MoviesViewModel moviesViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,32 +33,30 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         movieId = getIntent().getFloatExtra("movieId",0F);
         apiInterface = RetrofitClint.getRetrofit().create(APIInterface.class);
+        moviesViewModel = new ViewModelProvider(this).get(MoviesViewModel.class);
 
         if(movieId != 0F){
-            getMovieDetails();
+            moviesViewModel.movieId.setValue((int) movieId);
+            moviesViewModel.getAllMovieDetails();
         }
 
+        observeLiveData();
 
     }
 
-    private void getMovieDetails() {
-        apiInterface.getMovieDetails( (int) movieId,Utils.apiKey,Utils.language)
-                .enqueue(new Callback<MovieDetails>() {
-                    @Override
-                    public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
-                        if(response.isSuccessful()){
-                            if (response.body() != null){
-                                binding.setModel(response.body());
-                                binding.setGenresString(getGenresListString(response.body().getGenres()));
-                                binding.setRuntime(getRuntime(response.body().getRuntime()));
-                            }
-                        }
-                    }
+    private void observeLiveData() {
+        moviesViewModel.generalMovieDetails.observe(this, movieDetails -> {
+            if (movieDetails != null) {
+                binding.setModel(movieDetails);
+                binding.setGenresString(getGenresListString(movieDetails.getGenres()));
+                binding.setRuntime(getRuntime(movieDetails.getRuntime()));
+            }
+        });
 
-                    @Override
-                    public void onFailure(Call<MovieDetails> call, Throwable t) {}
-                });
+
     }
+
+
 
     @Override
     public void onBackPressed() {

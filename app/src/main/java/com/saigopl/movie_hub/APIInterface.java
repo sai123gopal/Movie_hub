@@ -1,5 +1,6 @@
 package com.saigopl.movie_hub;
 
+import com.saigopl.movie_hub.models.Credits;
 import com.saigopl.movie_hub.models.MovieDetails;
 import com.saigopl.movie_hub.models.OngoingMovieResults;
 
@@ -22,6 +23,13 @@ public interface APIInterface {
     Call<MovieDetails> getMovieDetails(@Path("movie_id") int movieId,
                                        @Query("api_key") String apiKey,
                                        @Query("language") String language);
+
+
+
+    @GET("{movie_id}/credits")
+    Call<Credits> getMovieCredits(@Path("movie_id") int movieId,
+                                  @Query("api_key") String apiKey,
+                                  @Query("language") String language);
 
 
 

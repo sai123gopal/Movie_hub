@@ -39,7 +39,7 @@
                 </ImageView>
 
                 <RelativeLayout
-                    android:layout_marginTop="10dp"
+                    android:background="@drawable/top_shadow_gradient"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -51,15 +51,42 @@
                         app:tint="@color/white">
                     </ImageButton>
 
-                    <TextView
-                        android:layout_alignParentEnd="true"
-                        tools:text="9.0(39)"
-                        android:layout_centerVertical="true"
-                        android:textColor="@color/white"
-                        android:text="@{String.valueOf(model.vote_average)+`(`+String.valueOf(model.vote_count)+`)`}"
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="10dp"
+                        app:cardBackgroundColor="@color/blue"
+                        app:cardCornerRadius="10dp"
+                        android:layout_centerVertical="true"
                         android:layout_height="wrap_content">
-                    </TextView>
+                        <LinearLayout
+                            android:paddingVertical="5dp"
+                            android:paddingHorizontal="10dp"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                tools:text="9.00"
+                                android:textColor="@color/white"
+                                android:text="@{String.valueOf(model.vote_average)}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            </TextView>
+
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_round_star_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:tint="@color/white">
+                            </ImageView>
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
 
                 </RelativeLayout>
 
@@ -115,6 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </TextView>
+
 
 
 
