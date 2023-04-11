@@ -16,7 +16,9 @@ import androidx.paging.PagingLiveData;
 import com.saigopl.movie_hub.helpUtils.Utils;
 import com.saigopl.movie_hub.models.Credits;
 import com.saigopl.movie_hub.models.MovieDetails;
+import com.saigopl.movie_hub.models.MoviesReviews;
 import com.saigopl.movie_hub.models.OngoingMovieDetails;
+import com.saigopl.movie_hub.models.Reviews;
 import com.saigopl.movie_hub.models.SimilarMovies;
 
 import java.io.IOException;
@@ -34,6 +36,7 @@ public class MoviesViewModel extends AndroidViewModel {
     MutableLiveData<MovieDetails> generalMovieDetails;
     MutableLiveData<Credits> movieCredits;
     MutableLiveData<SimilarMovies> similarMoviesMutableLiveData;
+    MutableLiveData<Reviews> reviewsMutableLiveData;
 
 
 
@@ -45,6 +48,7 @@ public class MoviesViewModel extends AndroidViewModel {
         generalMovieDetails = new MutableLiveData<>();
         movieCredits = new MutableLiveData<>();
         similarMoviesMutableLiveData = new MutableLiveData<>();
+        reviewsMutableLiveData = new MutableLiveData<>();
 
     }
 
@@ -63,6 +67,28 @@ public class MoviesViewModel extends AndroidViewModel {
         getMovieDetails();
         getMovieCreditsDetails();
         getSimilarMovies();
+        getMovieReviews();
+    }
+
+    private void getMovieReviews() {
+
+        apiInterface.getMovieReviews(movieId.getValue(), Utils.apiKey,Utils.language,1)
+                .enqueue(new Callback<Reviews>() {
+                    @Override
+                    public void onResponse(Call<Reviews> call, Response<Reviews> response) {
+                        if(response.isSuccessful()){
+                            if (response.body() != null){
+                                reviewsMutableLiveData.setValue(response.body());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Reviews> call, Throwable t) {
+
+                    }
+                });
+
     }
 
     private void getSimilarMovies() {

@@ -7,22 +7,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
-import android.util.Log;
-
 import com.saigopl.movie_hub.adapters.CastRecyclerAdapter;
+import com.saigopl.movie_hub.adapters.MovieReviewsRecyclerAdapter;
+import com.saigopl.movie_hub.adapters.SimilarMoviesRecyclerAdapter;
 import com.saigopl.movie_hub.databinding.ActivityMovieDetailsBinding;
-import com.saigopl.movie_hub.helpUtils.Utils;
 import com.saigopl.movie_hub.models.Cast;
-import com.saigopl.movie_hub.models.Credits;
 import com.saigopl.movie_hub.models.MovieDetails;
+import com.saigopl.movie_hub.models.MoviesReviews;
+import com.saigopl.movie_hub.models.Reviews;
 import com.saigopl.movie_hub.models.SimilarMovieDetails;
-import com.saigopl.movie_hub.models.SimilarMovies;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -33,6 +29,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
     CastRecyclerAdapter castRecyclerAdapter;
     ArrayList<Cast> castArrayList ;
     ArrayList<SimilarMovieDetails> similarMovieDetailsArrayList;
+    SimilarMoviesRecyclerAdapter similarMoviesRecyclerAdapter;
+
+    ArrayList<MoviesReviews> moviesReviewsArrayList;
+
+    MovieReviewsRecyclerAdapter movieReviewsRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         moviesViewModel = new ViewModelProvider(this).get(MoviesViewModel.class);
         castArrayList= new ArrayList<>();
         similarMovieDetailsArrayList = new ArrayList<>();
+        moviesReviewsArrayList = new ArrayList<>();
 
         if(movieId != 0F){
             moviesViewModel.movieId.setValue((int) movieId);
@@ -54,7 +56,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
         binding.castRecycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         castRecyclerAdapter = new CastRecyclerAdapter(castArrayList,this);
 
+        binding.similarMoviesRecycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        similarMoviesRecyclerAdapter = new SimilarMoviesRecyclerAdapter(similarMovieDetailsArrayList,this);
+
+        binding.reviewsMoviesRecycler.setLayoutManager(new LinearLayoutManager(this));
+        movieReviewsRecyclerAdapter = new MovieReviewsRecyclerAdapter(moviesReviewsArrayList,this);
+
         binding.castRecycler.setAdapter(castRecyclerAdapter);
+        binding.similarMoviesRecycler.setAdapter(similarMoviesRecyclerAdapter);
+        binding.reviewsMoviesRecycler.setAdapter(movieReviewsRecyclerAdapter);
 
         observeLiveData();
 
@@ -77,8 +87,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
 
         moviesViewModel.similarMoviesMutableLiveData.observe(this, similarMovies -> {
-
+            similarMovieDetailsArrayList.addAll(similarMovies.getDetails());
+            similarMoviesRecyclerAdapter.notifyDataSetChanged();
         });
+
+        moviesViewModel.reviewsMutableLiveData.observe(this, reviews -> {
+            moviesReviewsArrayList.addAll(reviews.getMoviesReviews());
+            movieReviewsRecyclerAdapter.notifyDataSetChanged();
+        });
+
+        binding.setClick(new Click());
 
 
     }
@@ -108,6 +126,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
         float minutes = runtime % 60;
 
         return  (int)hours+"hr "+(int)minutes+"min";
+    }
+
+    public class Click{
+        public void back(){
+            finish();
+        }
     }
 
 }

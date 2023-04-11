@@ -50,11 +50,11 @@ public class OnGoingMoviesRecyclerAdapter extends PagingDataAdapter<OngoingMovie
         }
     }
 
-    public class Click{
-        public void openMovieDetails(float id){
-            Intent intent = new Intent(context, MovieDetailsActivity.class);
+    public static class Click{
+        public void openMovieDetails(View view,float id){
+            Intent intent = new Intent(view.getContext(), MovieDetailsActivity.class);
             intent.putExtra("movieId",id);
-            context.startActivity(intent);
+            view.getContext().startActivity(intent);
         }
     }
 

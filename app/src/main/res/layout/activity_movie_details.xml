@@ -10,6 +10,9 @@
             name="model"
             type="com.saigopl.movie_hub.models.MovieDetails" />
         <variable
+            name="click"
+            type="com.saigopl.movie_hub.MovieDetailsActivity.Click" />
+        <variable
             name="genresString"
             type="String" />
         <variable
@@ -17,7 +20,7 @@
             type="String" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -70,6 +73,7 @@
                             <TextView
                                 android:layout_gravity="center"
                                 tools:text="9.00"
+                                android:textSize="20sp"
                                 android:textColor="@color/white"
                                 android:text="@{String.valueOf(model.vote_average)}"
                                 android:layout_width="wrap_content"
@@ -87,19 +91,15 @@
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-
-
                 </RelativeLayout>
 
-
             </RelativeLayout>
-
 
             <LinearLayout
                 android:background="@drawable/curve_background"
                 android:layout_width="match_parent"
                 android:paddingHorizontal="20dp"
-                android:layout_marginBottom="50dp"
+                android:paddingBottom="50dp"
                 android:orientation="vertical"
                 android:layout_marginTop="-30dp"
                 android:layout_height="match_parent">
@@ -115,6 +115,12 @@
                     android:layout_height="wrap_content">
                 </TextView>
 
+                <ImageView
+                    android:src="@drawable/_18_plus_icon"
+                    android:visibility="@{model.adult ? View.VISIBLE:View.GONE,default=gone}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+                </ImageView>
 
                 <TextView
                     android:textSize="18sp"
@@ -171,13 +177,54 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
 
+                <TextView
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Similar movies"
+                    android:textColor="@color/orange"
+                    tools:text="Similar movies"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/similar_movies_recycler"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    tools:listitem="@layout/similar_movies_items"
+                    tools:itemCount="5"
+                    android:layout_height="300dp">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Reviews"
+                    android:textColor="@color/orange"
+                    tools:text="Reviews"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviews_movies_recycler"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    tools:listitem="@layout/movie_reviews_items"
+                    tools:itemCount="5"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 
 </layout>
