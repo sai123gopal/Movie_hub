@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.saigopl.movie_hub.models.Cast" />
+        <import type="android.view.View"/>
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:loadProfileImage="@{model.profile_path}"
+                android:layout_width="100dp"
+                android:layout_gravity="center"
+                android:layout_height="100dp">
+            </ImageView>
+
+            <TextView
+                android:text="@{model.name}"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/orange"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <TextView
+                android:text="@{model.character}"
+                android:layout_gravity="bottom"
+                android:layout_width="100dp"
+                android:gravity="center"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_height="wrap_content">
+            </TextView>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</layout>

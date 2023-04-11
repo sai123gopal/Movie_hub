@@ -17,6 +17,7 @@ import com.saigopl.movie_hub.helpUtils.Utils;
 import com.saigopl.movie_hub.models.Credits;
 import com.saigopl.movie_hub.models.MovieDetails;
 import com.saigopl.movie_hub.models.OngoingMovieDetails;
+import com.saigopl.movie_hub.models.SimilarMovies;
 
 import java.io.IOException;
 
@@ -32,6 +33,7 @@ public class MoviesViewModel extends AndroidViewModel {
     MutableLiveData<Integer> movieId;
     MutableLiveData<MovieDetails> generalMovieDetails;
     MutableLiveData<Credits> movieCredits;
+    MutableLiveData<SimilarMovies> similarMoviesMutableLiveData;
 
 
 
@@ -42,6 +44,7 @@ public class MoviesViewModel extends AndroidViewModel {
         movieId = new MutableLiveData<>(0);
         generalMovieDetails = new MutableLiveData<>();
         movieCredits = new MutableLiveData<>();
+        similarMoviesMutableLiveData = new MutableLiveData<>();
 
     }
 
@@ -59,6 +62,26 @@ public class MoviesViewModel extends AndroidViewModel {
     public void getAllMovieDetails(){
         getMovieDetails();
         getMovieCreditsDetails();
+        getSimilarMovies();
+    }
+
+    private void getSimilarMovies() {
+        apiInterface.getSimilarMovies(movieId.getValue(), Utils.apiKey,Utils.language,1)
+                .enqueue(new Callback<SimilarMovies>() {
+                    @Override
+                    public void onResponse(Call<SimilarMovies> call, Response<SimilarMovies> response) {
+                        if(response.isSuccessful()){
+                            if (response.body() != null){
+                                similarMoviesMutableLiveData.setValue(response.body());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SimilarMovies> call, Throwable t) {
+
+                    }
+                });
     }
 
 
@@ -69,7 +92,7 @@ public class MoviesViewModel extends AndroidViewModel {
                     public void onResponse(Call<Credits> call, Response<Credits> response) {
                         if(response.isSuccessful()){
                             if (response.body() != null){
-                                movieCredits.postValue(response.body());
+                                movieCredits.setValue(response.body());
                             }
                         }
                     }

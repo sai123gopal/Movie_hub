@@ -13,7 +13,7 @@ public class Credits {
 
     @SerializedName("cast")
     @Expose
-    private ArrayList<Cast> casts;
+    private ArrayList<Cast> casts = new ArrayList<>();
 
     public ArrayList<Cast> getCasts() {
         return casts;

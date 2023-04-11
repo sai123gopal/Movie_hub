@@ -3,6 +3,7 @@ package com.saigopl.movie_hub;
 import com.saigopl.movie_hub.models.Credits;
 import com.saigopl.movie_hub.models.MovieDetails;
 import com.saigopl.movie_hub.models.OngoingMovieResults;
+import com.saigopl.movie_hub.models.SimilarMovies;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
@@ -31,7 +32,11 @@ public interface APIInterface {
                                   @Query("api_key") String apiKey,
                                   @Query("language") String language);
 
-
+    @GET("{movie_id}/similar")
+    Call<SimilarMovies> getSimilarMovies(@Path("movie_id") int movieId,
+                                   @Query("api_key") String apiKey,
+                                   @Query("language") String language,
+                                         @Query("page") int page);
 
 
 }

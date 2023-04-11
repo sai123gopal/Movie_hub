@@ -39,4 +39,13 @@ public class DataBindingUtils {
                 .into(imageView);
     }
 
+    @BindingAdapter({"loadProfileImage"})
+    public static void loadProfileImage(ImageView imageView,String path){
+        Glide.with(imageView.getContext())
+                .load("https://image.tmdb.org/t/p/w200/"+path)
+                .placeholder(R.drawable.ic_baseline_person_24)
+                .into(imageView);
+    }
+
+
 }

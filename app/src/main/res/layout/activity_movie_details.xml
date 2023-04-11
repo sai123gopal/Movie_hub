@@ -41,6 +41,7 @@
                 <RelativeLayout
                     android:background="@drawable/top_shadow_gradient"
                     android:layout_width="match_parent"
+                    android:paddingTop="10dp"
                     android:layout_height="wrap_content">
 
                     <ImageButton
@@ -98,6 +99,7 @@
                 android:background="@drawable/curve_background"
                 android:layout_width="match_parent"
                 android:paddingHorizontal="20dp"
+                android:layout_marginBottom="50dp"
                 android:orientation="vertical"
                 android:layout_marginTop="-30dp"
                 android:layout_height="match_parent">
@@ -116,6 +118,7 @@
 
                 <TextView
                     android:textSize="18sp"
+                    android:textColor="@color/blue"
                     android:text="@{genresString}"
                     tools:text="Movie name"
                     android:layout_marginTop="10dp"
@@ -127,6 +130,7 @@
                     android:textSize="18sp"
                     android:text="@{runtime}"
                     tools:text="Movie name"
+                    android:textColor="@color/blue"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -143,6 +147,28 @@
                     android:layout_height="wrap_content">
                 </TextView>
 
+                <TextView
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Cast"
+                    android:textColor="@color/orange"
+                    tools:text="Cast"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cast_recycler"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    tools:listitem="@layout/cast_items"
+                    tools:itemCount="5"
+                    android:layout_height="220dp">
+                </androidx.recyclerview.widget.RecyclerView>
 
 
 
